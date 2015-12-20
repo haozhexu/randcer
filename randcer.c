@@ -18,7 +18,7 @@ void analysis_odd_even_ratio(int *numbers, int n, char *buf, int buf_size);
 void analysis_big_small_ratio(int *numbers, int n, int mid, char *buf, int buf_size);
 void analysis_sum(int *numbers, int n, char *buf, int buf_size);
 void analysis_continue_count(int *sorted_numbers, int n, char *buf, int buf_size);
-
+void analysis_sum_mod(int *numbers, int n, int mod, char *buf, int buf_size);
 
 int main(int argc, char *argv[]) {
     
@@ -116,11 +116,23 @@ void analysis_continue_count(int *sorted_numbers, int n, char *buf, int buf_size
     sprintf(buf, "%d", cont_count);
 }
 
+void analysis_sum_mod(int *numbers, int n, int mod, char *buf, int buf_size) {
+    int sum = 0;
+    for (int i = 0 ; i < n ; i++) {
+        sum += numbers[i];
+    }
+
+    sum = sum % mod;
+    
+    memset(buf, 0, buf_size * sizeof(char));
+    sprintf(buf, "%d", sum);
+}
+
 void start_main_loop(int draw_count) {
     if (draw_count > 0) {
         
-        printf("I\tII\tIII\tIV\tV\tVI\tO:E\tB:S\tSUM\tCOT\n");
-        printf("-----------------------------------------------------------------------------\n");
+        printf("I\tII\tIII\tIV\tV\tVI\tO:E\tB:S\tSUM\tCOT\tSM7\n");
+        printf("-----------------------------------------------------------------------------------\n");
         
         for (int i = 0 ; i < draw_count ; i++) {
             // each draw we generate NUMBER_EACH_DRAW random numbers
@@ -161,9 +173,9 @@ void start_main_loop(int draw_count) {
             
             analysis_continue_count(draw, NUMBER_EACH_DRAW, result, BUFFER_SIZE);
             printf("%s\t", result);
-            
-            // new line
-            printf("\n");
+
+            analysis_sum_mod(draw, NUMBER_EACH_DRAW, 7, result, BUFFER_SIZE);
+            printf("%s\n", result);
         }
         
     }
