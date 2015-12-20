@@ -6,6 +6,7 @@
 #define NUMBER_EACH_DRAW 6
 #define NUMBER_LOWER_LIMIT 1
 #define NUMBER_UPPER_LIMIT 34
+#define NUMBER_RANGE (NUMBER_UPPER_LIMIT - NUMBER_LOWER_LIMIT + 1)
 
 typedef enum {false = 0, true} bool;
 
@@ -124,9 +125,19 @@ void start_main_loop(int draw_count) {
         for (int i = 0 ; i < draw_count ; i++) {
             // each draw we generate NUMBER_EACH_DRAW random numbers
             int draw[NUMBER_EACH_DRAW];
-            for (int j = 0 ; j < NUMBER_EACH_DRAW ; j++) {
-                int num = NUMBER_LOWER_LIMIT + arc4random_uniform(NUMBER_UPPER_LIMIT - NUMBER_LOWER_LIMIT);
-                draw[j] = num;
+            int occurrence[NUMBER_RANGE];
+            int j = 0, numbers_needed = NUMBER_EACH_DRAW;
+            memset(occurrence, 0, NUMBER_RANGE * sizeof(int));
+
+            while (numbers_needed > 0) {
+                int number = arc4random_uniform(1 + NUMBER_UPPER_LIMIT - NUMBER_LOWER_LIMIT);
+                if (occurrence[number] == 1) {
+                    continue;
+                }
+
+                occurrence[number] = 1;
+                draw[j++] = NUMBER_LOWER_LIMIT + number;
+                numbers_needed--;
             }
             
             // then we print out the draw as well as all analysis data
