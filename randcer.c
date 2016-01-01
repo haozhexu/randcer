@@ -131,7 +131,7 @@ void analysis_sum_mod(int *numbers, int n, int mod, char *buf, int buf_size) {
 void start_main_loop(int draw_count) {
     if (draw_count > 0) {
         
-        printf("I\tII\tIII\tIV\tV\tVI\tO:E\tB:S\tSUM\tCOT\tSM7\n");
+        printf("L\t\tI\tII\tIII\tIV\tV\tVI\tO:E\tB:S\tSUM\tCOT\tSM7\n");
         printf("-----------------------------------------------------------------------------------\n");
         
         for (int i = 0 ; i < draw_count ; i++) {
@@ -151,6 +151,9 @@ void start_main_loop(int draw_count) {
                 draw[j++] = NUMBER_LOWER_LIMIT + number;
                 numbers_needed--;
             }
+
+            // print row number
+            printf("%d\t\t", i + 1);
             
             // then we print out the draw as well as all analysis data
             quick_sort(draw, NUMBER_EACH_DRAW);
